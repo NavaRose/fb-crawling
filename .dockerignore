@@ -1,0 +1,6 @@
+.elasticbeanstalk/*
+.git
+.gitignore
+.idea
+Dockerfile
+fb-research.iml
