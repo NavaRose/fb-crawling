@@ -1,9 +1,0 @@
-version: '3.3'
-services:
-  php:
-    image: webdevops/php-nginx:7.3-alpine
-    container_name: facebook_discover
-    volumes:
-      - ./:/app
-    ports:
-      - "85:80"

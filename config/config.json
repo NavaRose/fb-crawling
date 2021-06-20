@@ -1,9 +1,0 @@
-{
-  "get_data_url": "https://www.googleapis.com/customsearch/v1",
-  "config_data": {
-    "key": "AIzaSyB_te5cJTRk62f9cjNE0I2WvPnuKVMLIrU",
-    "cx": "001032228137328174535:chfquv50c9o",
-    "start": 1,
-    "num": 10
-  }
-}

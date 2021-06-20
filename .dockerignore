@@ -1,5 +1,0 @@
-.elasticbeanstalk/*
-.git
-.gitignore
-.idea
-Dockerfile
