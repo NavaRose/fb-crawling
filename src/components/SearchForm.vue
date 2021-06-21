@@ -12,7 +12,9 @@
         </div>
       </div>
       <div class="col-2 d-grid">
-        <button id="{{ elements.searchButton }}" class="btn btn-block btn-primary float-left" type="submit">{{ label.searchButton }}</button>
+        <button id="{{ elements.searchButton }}" class="btn btn-block btn-primary float-left" type="submit">
+          {{ label.searchButton }}
+        </button>
       </div>
       <div class="col-2" id="sheet-config">
         <SheetConfig></SheetConfig>
@@ -23,13 +25,16 @@
 
 <script>
 import SheetConfig from "@/components/SheetConfig";
+import axios from "axios";
 
 export default {
   name: "SearchForm",
   components: {SheetConfig},
   data: () => {
     return {
-      bootstrap: require('bootstrap'),
+      urls: {
+        getData: 'http://localhost:3000/api/get-data/'
+      },
       label: {
         searchButton: 'Search',
       },
@@ -41,6 +46,12 @@ export default {
     }
   },
   methods: {
+    searchSubmit() {
+      let searchKey = document.getElementById(this.elements.searchInput).value;
+      axios.get(this.urls.getData + searchKey, (response) => {
+        console.log(response.data);
+      });
+    }
   }
 }
 </script>
