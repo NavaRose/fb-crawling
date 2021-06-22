@@ -1,26 +1,27 @@
 <template>
-  <form id="search-form" v-on:submit.prevent="searchSubmit">
-    <div class="row">
-      <div class="col-8">
+    <form id="search-form" v-on:submit.prevent="searchSubmit">
         <div class="row">
-          <div class="col-1">
-            <img alt="logo" class="fb-logo mr-2" src="../assets/images/icon-facebook.png"/>
-          </div>
-          <div class="col-11">
-            <input id="search-input" type="text" class="form-control" placeholder="Search Products and Services">
-          </div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-1">
+                        <img alt="logo" class="fb-logo mr-2" src="../assets/images/icon-facebook.png"/>
+                    </div>
+                    <div class="col-11">
+                        <input id="search-input" type="text" class="form-control"
+                               placeholder="Search Products and Services">
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 d-grid">
+                <button id="{{ elements.searchButton }}" class="btn btn-block btn-primary float-left" type="submit">
+                    {{ label.searchButton }}
+                </button>
+            </div>
+            <div class="col-2" id="sheet-config">
+                <SheetConfig></SheetConfig>
+            </div>
         </div>
-      </div>
-      <div class="col-2 d-grid">
-        <button id="{{ elements.searchButton }}" class="btn btn-block btn-primary float-left" type="submit">
-          {{ label.searchButton }}
-        </button>
-      </div>
-      <div class="col-2" id="sheet-config">
-        <SheetConfig></SheetConfig>
-      </div>
-    </div>
-  </form>
+    </form>
 </template>
 
 <script>
@@ -28,37 +29,65 @@ import SheetConfig from "@/components/SheetConfig";
 import axios from "axios";
 
 export default {
-  name: "SearchForm",
-  components: {SheetConfig},
-  data: () => {
-    return {
-      urls: {
-        getData: 'http://localhost:3000/api/get-data/'
-      },
-      label: {
-        searchButton: 'Search',
-      },
-      elements: {
-        searchForm: 'search-form',
-        searchInput: 'search-input',
-        searchButton: 'searching-key-fb',
-      }
+    name: "SearchForm",
+    props: ['tableItems'],
+    components: {SheetConfig},
+    data: () => {
+        return {
+            urls: {
+                getData: 'http://localhost:3000/api/get-data/'
+            },
+            label: {
+                searchButton: 'Search',
+            },
+            elements: {
+                searchForm: 'search-form',
+                searchInput: 'search-input',
+                searchButton: 'searching-key-fb',
+            }
+        }
+    },
+    methods: {
+        searchSubmit() {
+            let searchKey = document.getElementById(this.elements.searchInput).value;
+            if (!searchKey) {
+                return false;
+            }
+            axios.get(this.urls.getData + searchKey)
+                .then((response) => {
+                    let responseData = response.data;
+                    if (typeof responseData.error !== 'undefined') {
+                        console.error('[' + responseData.error.code + '] ' + responseData.error.status + ': ' + responseData.error.message);
+                        return;
+                    }
+                    let data = [];
+                    const items = response.data.items.map((item) => {
+                        data.push({
+                            id: item.cacheId,
+                            thumbnail: item.pagemap.cse_thumbnail ? item.pagemap.cse_thumbnail[0] :
+                                {src: '../src/assets/images/no-avatar.jpeg'},
+                            title: item.htmlTitle,
+                            rawTitle: item.title,
+                            description: item.htmlSnippet,
+                            rawDescription: item.snippet,
+                            url: item.htmlFormattedUrl,
+                            rawUrl: item.formattedUrl
+                        });
+                    });
+                    this.$emit('update-data', data, items);
+                });
+        }
     }
-  },
-  methods: {
-    searchSubmit() {
-      let searchKey = document.getElementById(this.elements.searchInput).value;
-      axios.get(this.urls.getData + searchKey, (response) => {
-        console.log(response.data);
-      });
-    }
-  }
 }
 </script>
 
 <style scoped>
-  img.fb-logo {
+img.fb-logo {
     width: auto !important;
     height: 38px;
-  }
+}
+
+#search-input {
+    border: 0.5px solid #cce5ff;
+}
 </style>
