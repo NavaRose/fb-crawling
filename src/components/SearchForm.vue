@@ -17,7 +17,7 @@
                     {{ label.searchButton }}
                 </button>
             </div>
-            <div class="col-2" id="sheet-config">
+            <div class="col-2 d-grid" id="sheet-config">
                 <SheetConfig></SheetConfig>
             </div>
         </div>
