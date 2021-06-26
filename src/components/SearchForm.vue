@@ -26,12 +26,13 @@
 
 <script>
 import SheetConfig from "@/components/SheetConfig";
-import axios from "axios";
+import App from "../App";
 
 export default {
     name: "SearchForm",
     props: ['tableItems'],
     components: {SheetConfig},
+    extends: App,
     data: () => {
         return {
             urls: {
@@ -53,29 +54,23 @@ export default {
             if (!searchKey) {
                 return false;
             }
-            axios.get(this.urls.getData + searchKey)
-                .then((response) => {
-                    let responseData = response.data;
-                    if (typeof responseData.error !== 'undefined') {
-                        console.error('[' + responseData.error.code + '] ' + responseData.error.status + ': ' + responseData.error.message);
-                        return;
-                    }
-                    let data = [];
-                    const items = response.data.items.map((item) => {
-                        data.push({
-                            id: item.cacheId,
-                            thumbnail: item.pagemap.cse_thumbnail ? item.pagemap.cse_thumbnail[0] :
-                                {src: '../src/assets/images/no-avatar.jpeg'},
-                            title: item.htmlTitle,
-                            rawTitle: item.title,
-                            description: item.htmlSnippet,
-                            rawDescription: item.snippet,
-                            url: item.htmlFormattedUrl,
-                            rawUrl: item.formattedUrl
-                        });
+            this.helper.apiGet(this.urls.getData + searchKey, {}, (response) => {
+                let data = [];
+                const items = response.items.map((item) => {
+                    data.push({
+                        id: item.cacheId,
+                        thumbnail: item.pagemap.cse_thumbnail ? item.pagemap.cse_thumbnail[0] :
+                            {src: '../src/assets/images/no-avatar.jpeg'},
+                        title: item.htmlTitle,
+                        rawTitle: item.title,
+                        description: item.htmlSnippet,
+                        rawDescription: item.snippet,
+                        url: item.htmlFormattedUrl,
+                        rawUrl: item.formattedUrl
                     });
-                    this.$emit('update-data', data, items);
                 });
+                this.$emit('update-data', data, items);
+            });
         }
     }
 }

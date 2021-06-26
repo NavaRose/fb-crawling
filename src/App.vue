@@ -41,13 +41,31 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     margin-top: 60px;
+}
+
+.overlay {
+    opacity: 0.8;
+    z-index: 9999999999999 !important;
+    height: 100%;
+}
+
+.overlay::before {
+    background: #fff;
+    opacity: 0.7;
+    content: url("./assets/images/overlay.svg");
+    text-align: center;
+    position: absolute;
+    //top: ;
+    //left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .datatable-thead-thumbnail {
