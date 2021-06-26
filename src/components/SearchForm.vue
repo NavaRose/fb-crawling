@@ -1,12 +1,12 @@
 <template>
     <form id="search-form" v-on:submit.prevent="searchSubmit">
         <div class="row">
-            <div class="col-8">
+            <div class="col-7">
                 <div class="row">
-                    <div class="col-1">
+                    <div class="col-lg-1 col-md-2">
                         <img alt="logo" class="fb-logo mr-2" src="../assets/images/icon-facebook.png"/>
                     </div>
-                    <div class="col-11">
+                    <div class="col-lg-11 col-md-10">
                         <input id="search-input" type="text" class="form-control"
                                placeholder="Search Products and Services">
                     </div>
@@ -17,7 +17,7 @@
                     {{ label.searchButton }}
                 </button>
             </div>
-            <div class="col-2 d-grid" id="sheet-config">
+            <div class="col-3 d-grid" id="sheet-config">
                 <SheetConfig></SheetConfig>
             </div>
         </div>

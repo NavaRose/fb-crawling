@@ -48,6 +48,35 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     margin-top: 60px;
+
+    .datatable-thead-thumbnail {
+        width: 120px !important;
+    }
+
+    #notification {
+        min-height: 36px;
+        font-weight: bold;
+    }
+
+
+    .success-notification {
+        color: #28a745;
+    }
+
+    .failed-notification {
+        color: #ff0000;
+    }
+
+    #result-table_filter {
+        display: none !important;
+    }
+
+    .alert {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 9999;
+    }
 }
 
 .overlay {
@@ -61,39 +90,12 @@ export default {
     opacity: 0.7;
     content: url("./assets/images/overlay.svg");
     text-align: center;
-    position: absolute;
-    //top: ;
-    //left: 0;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 0;
     width: 100%;
-    height: 100%;
-}
-
-.datatable-thead-thumbnail {
-    width: 120px !important;
-}
-
-#notification {
-    min-height: 36px;
-    font-weight: bold;
-}
-
-
-.success-notification {
-    color: #28a745;
-}
-
-.failed-notification {
-    color: #ff0000;
-}
-
-#result-table_filter {
-    display: none !important;
-}
-
-.alert {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    z-index: 9999;
+    height: 100vh;
+    line-height: 100vh;
 }
 </style>
